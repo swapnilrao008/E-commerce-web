@@ -22,7 +22,7 @@ public class FakeStoreService implements ProductService{
 
 
     @Override
-    public Product getSingleProduct(int productId) throws ProductNotFoundException {
+    public Product getSingleProduct(long productId) throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto=restTemplate.getForObject("http://fakestoreapi.com/products/"+productId, FakeStoreDto.class);
         if(fakeStoreDto==null)
         {
@@ -65,7 +65,7 @@ public class FakeStoreService implements ProductService{
     }
 
     @Override
-    public Product deleteProduct(int productId) throws ProductNotFoundException {
+    public Product deleteProduct(long productId) throws ProductNotFoundException {
         FakeStoreDto fakeStoreDto=restTemplate.exchange(
                 "http://fakestoreapi.com/products/"+productId, HttpMethod.DELETE,null, FakeStoreDto.class).getBody();
         if(fakeStoreDto==null)
@@ -78,7 +78,7 @@ public class FakeStoreService implements ProductService{
 
     //patch method is not supported in rest template
     @Override
-    public Product updateProduct(int productId,String title, Double price, String description, String category, String image) throws ProductNotFoundException {
+    public Product updateProduct(long productId,String title, Double price, String description, String category, String image) throws ProductNotFoundException {
 
         FakeStoreDto fakeStoreDto=new FakeStoreDto();
         fakeStoreDto.setTitle(title);
@@ -92,7 +92,7 @@ public class FakeStoreService implements ProductService{
     }
 
     @Override
-    public Product replaceProduct(int productId, String title, Double price, String description, String category, String image) throws ProductNotFoundException {
+    public Product replaceProduct(long productId, String title, Double price, String description, String category, String image) throws ProductNotFoundException {
         FakeStoreDto requestDto=new FakeStoreDto();
         requestDto.setTitle(title);
         requestDto.setPrice(price);

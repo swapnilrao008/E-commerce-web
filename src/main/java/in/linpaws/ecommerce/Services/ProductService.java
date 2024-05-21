@@ -7,7 +7,7 @@ import in.linpaws.ecommerce.Models.Product;
 import java.util.List;
 
 public interface ProductService {
-    public Product getSingleProduct(int productId) throws ProductNotFoundException;
+    public Product getSingleProduct(long productId) throws ProductNotFoundException;
 
     public List<Product> getAllProducts();
 
@@ -17,9 +17,9 @@ public interface ProductService {
                               String category,
                               String image);
 
-    public Product deleteProduct(int productId) throws ProductNotFoundException;
+    public Product deleteProduct(long productId) throws ProductNotFoundException;
 
-   public Product updateProduct(int productId,String title, Double price, String description, String category, String image) throws ProductNotFoundException;
+   public Product updateProduct(long productId,String title, Double price, String description, String category, String image) throws ProductNotFoundException;
 
-    public Product replaceProduct(int productId, String title, Double price, String description, String category, String image) throws ProductNotFoundException;
+    public Product replaceProduct(long productId, String title, Double price, String description, String category, String image) throws ProductNotFoundException;
 }
