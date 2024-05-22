@@ -7,6 +7,7 @@ import in.linpaws.ecommerce.Exceptions.ProductNotFoundException;
 import in.linpaws.ecommerce.Models.Product;
 import in.linpaws.ecommerce.Services.ProductService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ProductController {
     private ProductService productService;
     private ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, ModelMapper modelMapper) {
+    public ProductController(@Qualifier("SelfProductService") ProductService productService, ModelMapper modelMapper) {
         this.productService = productService;
         this.modelMapper = modelMapper;
     }
