@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DatabaseMigrationSettings" lastSelectedDirectory="src\main\resources\db\migration" />
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit name="Default">
+        <packages>
+          <package value="in.linpaws.ecommerce" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit name="test_ps">
+        <packages>
+          <package value="in.linpaws.ecommerce.Models" />
+        </packages>
+      </persistence-unit>
+      <persistence-unit name="test2">
+        <packages>
+          <package value="in.linpaws.ecommerce.Models" />
+        </packages>
+      </persistence-unit>
+    </persistence-units>
+  </component>
+</project>
