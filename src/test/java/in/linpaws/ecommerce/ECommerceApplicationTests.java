@@ -89,6 +89,8 @@ class ECommerceApplicationTests {
 //        System.out.println(product.getTitle()+" "+product.getPrice());
 //
 //    }
+//
+    //
 
     @Test
     @Transactional
