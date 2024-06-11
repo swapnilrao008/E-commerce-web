@@ -6,6 +6,7 @@ import in.linpaws.ecommerce.Exceptions.ProductNotFoundException;
 import in.linpaws.ecommerce.Models.Mobiles;
 import in.linpaws.ecommerce.Models.Product;
 import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -17,14 +18,25 @@ import java.util.List;
 @Service("FakeStoreService")
 public class FakeStoreService implements ProductService{
     private RestTemplate restTemplate;
+    private RedisTemplate redisTemplate;
 
-    public FakeStoreService(RestTemplate restTemplate) {
+    public FakeStoreService(RestTemplate restTemplate, RedisTemplate redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
 
     @Override
     public Product getSingleProduct(long productId) throws ProductNotFoundException {
+
+        Product productInCache=(Product) redisTemplate.opsForHash()
+                .get("PRODUCTS","PRODUCTS_"+productId);
+        if(productInCache!=null)
+        {
+            System.out.println("Cache hit for product "+productId);
+            return productInCache;
+        }
+        System.out.println("Cache hit for product "+productId);
         FakeStoreDto fakeStoreDto=restTemplate.getForObject("http://fakestoreapi.com/products/"+productId, FakeStoreDto.class);
         if(fakeStoreDto==null)
         {
@@ -32,7 +44,10 @@ public class FakeStoreService implements ProductService{
                     "Product with "+productId+" not found"+" try a product with id less than 21"
             );
         }
-        return fakeStoreDto.toProduct();
+
+        Product product= fakeStoreDto.toProduct();
+        redisTemplate.opsForHash().put("PRODUCTS","PRODUCTS_"+productId,product);
+        return product;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class ProductController {
     private ProductService productService;
     private ModelMapper modelMapper;
 
-    public ProductController(@Qualifier("SelfProductService") ProductService productService, ModelMapper modelMapper) {
+    public ProductController(@Qualifier("FakeStoreService") ProductService productService, ModelMapper modelMapper) {
         this.productService = productService;
         this.modelMapper = modelMapper;
     }
