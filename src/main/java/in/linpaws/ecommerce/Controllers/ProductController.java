@@ -1,13 +1,13 @@
 package in.linpaws.ecommerce.Controllers;
 
-import in.linpaws.ecommerce.DTOS.ErrorDto;
-import in.linpaws.ecommerce.DTOS.ProductRequestDto;
-import in.linpaws.ecommerce.DTOS.ProductResponseDto;
+import in.linpaws.ecommerce.DTOS.*;
 import in.linpaws.ecommerce.Exceptions.ProductNotFoundException;
+import in.linpaws.ecommerce.Models.Mobiles;
 import in.linpaws.ecommerce.Models.Product;
 import in.linpaws.ecommerce.Services.ProductService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +45,34 @@ public class ProductController {
         }
         return new ResponseEntity<>(productResponseDtos,HttpStatus.OK);
     }
+    @GetMapping("/mobiles")
+    public ResponseEntity<List<MobileResponseDto>> getAllMobiles(@RequestParam("PageNum") int pageNum,@RequestParam("PageSize") int pageSize,@RequestParam("Sortby") String sortParm,@RequestParam("direction") int direction)
+    {
+        Page<Mobiles> mobiles=productService.getAllMobiles(pageNum,pageSize,sortParm,direction);
+        List<MobileResponseDto> mobileResponseDtoList=new ArrayList<>();
+        for(Mobiles mobiles1:mobiles)
+        {
+            mobileResponseDtoList.add(convertToMobileResponseDto(mobiles1));
+
+        }
+        return new ResponseEntity<>(mobileResponseDtoList,HttpStatus.OK);
+
+    }
+
+    @GetMapping("/mobile")
+    public ResponseEntity<List<MobileResponseDto>> getAllMobiles(@RequestParam("PageNum") int x,@RequestParam("PageSize") int y)
+    {
+        Page<Mobiles> mobiles=productService.getAllMobiles(x,y);
+        List<MobileResponseDto> mobileResponseDtoList=new ArrayList<>();
+        for(Mobiles mobiles1:mobiles)
+        {
+            mobileResponseDtoList.add(convertToMobileResponseDto(mobiles1));
+
+        }
+        return new ResponseEntity<>(mobileResponseDtoList,HttpStatus.OK);
+
+    }
+
 
     @PostMapping("/products")
     public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductRequestDto productRequestDto)
@@ -58,6 +86,20 @@ public class ProductController {
         );
         ProductResponseDto productResponseDto=convertToProductResponseDto(product);
         return new ResponseEntity<>(productResponseDto,HttpStatus.CREATED);
+    }
+
+
+
+    @PostMapping("/mobiles")
+    public ResponseEntity<MobileResponseDto> createMobile(@RequestBody MobileRequestDto mobileRequestDto)
+    {
+        Mobiles mobiles=productService.addMobiles(
+                mobileRequestDto.getTitle(),
+                mobileRequestDto.getPrice(),
+                mobileRequestDto.getOs()
+        );
+        MobileResponseDto mobileResponseDto=convertToMobileResponseDto(mobiles);
+        return new ResponseEntity<>(mobileResponseDto,HttpStatus.CREATED);
     }
 
 
@@ -111,6 +153,14 @@ ProductResponseDto productResponseDto=convertToProductResponseDto(product);
         productResponseDto.setCategory(categeoryTitle);
 
         return productResponseDto;
+    }
+
+    private MobileResponseDto convertToMobileResponseDto(Mobiles mobiles)
+    {
+
+        MobileResponseDto mobileResponseDto=modelMapper.map(mobiles,MobileResponseDto.class);
+
+        return mobileResponseDto;
     }
 
 

@@ -13,7 +13,7 @@
           <package value="in.linpaws.ecommerce.Models" />
         </packages>
       </persistence-unit>
-      <persistence-unit name="test2">
+      <persistence-unit name="final">
         <packages>
           <package value="in.linpaws.ecommerce.Models" />
         </packages>

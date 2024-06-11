@@ -3,7 +3,9 @@ package in.linpaws.ecommerce.Services;
 import in.linpaws.ecommerce.DTOS.FakeStoreDto;
 import in.linpaws.ecommerce.DTOS.ProductResponseDto;
 import in.linpaws.ecommerce.Exceptions.ProductNotFoundException;
+import in.linpaws.ecommerce.Models.Mobiles;
 import in.linpaws.ecommerce.Models.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,16 @@ public class FakeStoreService implements ProductService{
     }
 
     @Override
+    public Page<Mobiles> getAllMobiles(int pageNum,int pageSize,String sortParam,int Direction) {
+        return null;
+    }
+
+    @Override
+    public Page<Mobiles> getAllMobiles(int x, int y) {
+        return null;
+    }
+
+    @Override
     public Product addProduct(
             String title,
     Double price,
@@ -62,6 +74,11 @@ public class FakeStoreService implements ProductService{
         return fakeStoreDto.toProduct();
 
 
+    }
+
+    @Override
+    public Mobiles addMobiles(String title, Double price, String os) {
+        return null;
     }
 
     @Override
